@@ -1,4 +1,4 @@
-package basics;
+package src.basics;
 
 public class Try3_8_1 {
     public static void main(String[] args) {

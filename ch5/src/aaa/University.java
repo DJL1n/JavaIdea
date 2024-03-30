@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class University {
     void enterRule(double math,double english,double chinese){

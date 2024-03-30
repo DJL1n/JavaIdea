@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class Sum{
     int n;

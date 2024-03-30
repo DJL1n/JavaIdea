@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Radio {
     void openRadio(Battery battery){

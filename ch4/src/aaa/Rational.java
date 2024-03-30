@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Rational {
     int numerator=1;

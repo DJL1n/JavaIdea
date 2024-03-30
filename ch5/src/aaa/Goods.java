@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Goods {
     public double weight;

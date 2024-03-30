@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class Computer{
     int add(int x,int y){

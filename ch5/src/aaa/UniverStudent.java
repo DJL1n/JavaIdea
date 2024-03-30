@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class UniverStudent extends Student{
     int multi(int x,int y){

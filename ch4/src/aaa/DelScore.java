@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class DelScore {
     ComputerAver computer;

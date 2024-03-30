@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class A {
     float computer(float x,float y){

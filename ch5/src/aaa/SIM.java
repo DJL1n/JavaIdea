@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public abstract class SIM {
     public abstract void setNumber(String n);

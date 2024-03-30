@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Rectangle extends Geometry{
     double a,b;

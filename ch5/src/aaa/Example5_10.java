@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class 类人猿{
     void crySpeak(String s){

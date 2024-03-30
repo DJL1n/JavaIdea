@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class A1{
     protected Object get(){

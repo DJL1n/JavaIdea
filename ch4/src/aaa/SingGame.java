@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class SingGame {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class People {
     int age,leg=2,hand=2;

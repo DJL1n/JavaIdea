@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Circle2 extends Geometry{
     double r;

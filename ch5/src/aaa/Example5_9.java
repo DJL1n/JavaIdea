@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class A2{
     final double PI=3.1415926;

@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class ImportantUniversity extends University {
     void enterRule(double math,double english,double chinese){

@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class AAA implements Com {
     public void on(){

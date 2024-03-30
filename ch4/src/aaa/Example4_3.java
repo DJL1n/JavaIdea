@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class Xiyoujirenwu{
     float height,weight;

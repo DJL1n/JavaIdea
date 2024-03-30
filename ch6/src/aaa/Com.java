@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public interface Com {
     int Max=100;

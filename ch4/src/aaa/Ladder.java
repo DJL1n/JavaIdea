@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Ladder {
     double above,bottom,height;

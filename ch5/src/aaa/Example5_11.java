@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class 动物{
     void cry(){

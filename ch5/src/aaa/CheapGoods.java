@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class CheapGoods extends Goods {
     public int weight;

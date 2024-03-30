@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class ComputerAver {
     public void giveAver(double[] b){

@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Student extends People{
     int number;

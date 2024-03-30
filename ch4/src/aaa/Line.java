@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class Line {
     InputScore one;

@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 class People1{
     private int averHeight=166;

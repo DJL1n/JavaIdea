@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 public class SIMOfChinaMobile extends SIM {
     String number;

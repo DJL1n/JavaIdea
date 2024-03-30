@@ -1,4 +1,4 @@
-package aaa;
+package src.aaa;
 
 abstract class GirlFriend{
     abstract void speak();
