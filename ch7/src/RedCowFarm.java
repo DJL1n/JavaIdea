@@ -1,6 +1,6 @@
 public class RedCowFarm {
     static String farmName;
-    RedCow cow;
+    RedCowFarm.RedCow cow;
     RedCowFarm(){}
     RedCowFarm(String s){
         cow = new RedCow(150,112,5000);
@@ -9,7 +9,7 @@ public class RedCowFarm {
     public void showCowMess(){
         cow.speak();
     }
-    class RedCow{
+    static class RedCow{
         String cowName="红牛";
         int height,weight,price;
         RedCow(int h,int w,int p){
