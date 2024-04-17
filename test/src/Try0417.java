@@ -1,9 +1,13 @@
+package src;
+
 class A{
     int t=2;
     double f(double m, double n){//m=4,n=5
         t=t*t;//4 //16
         return n+m+t;//13  //25
     }
+
+    protected Object g(int a,int b){return "";}
 }
 
 class B extends A{
@@ -12,6 +16,8 @@ class B extends A{
         double c=super.f(m,n);//13
         return m*n+t*super.t;//32 //68
     }
+
+    public Integer g(int a,int b){return 0;}
 }
 
 
