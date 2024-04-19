@@ -20,7 +20,24 @@ class B extends A{
     public Integer g(int a,int b){return 0;}
 }
 
+class student
+{
+    int id;
+    String name;
+    student(int id,String name)
+    {
+        this.id=id;
+        this.name=name;
+    }
 
+    @Override
+    public String toString() {
+        return "student{" +
+                id +
+                " " + name + '\'' +
+                '}';
+    }
+}
 
 public class Try0417 {
     public static void main(String[] args) {
@@ -28,5 +45,10 @@ public class Try0417 {
        B b=new B();
         System.out.println(b.f(m, n));
         System.out.println(b.f(m, n));
+        int time=100;
+        System.out.println(Integer.toString(time));
+
+        student a=new student(323,"zhangao");
+        System.out.println(a);
     }
 }
