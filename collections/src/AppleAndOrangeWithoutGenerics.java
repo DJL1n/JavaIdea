@@ -32,7 +32,7 @@ public class AppleAndOrangeWithoutGenerics {
         }
         //编译时错误
         //泛型规定可以向里面保存的对象类型，尖括号里面可以写多个，等号右边不需要写
-        apples.add(new Orange());
+//        apples.add(new Orange());
         for (Object apple : apples) {
             ((Apple)apple).id();
         }
