@@ -15,11 +15,18 @@ public class Test {
 //        StudentService studentService=new StudentServicelmpl();
 //        studentService.addStudent(student).forEach(System.out::println);
 //    }
-    public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
-        StudentService studentService=new StudentServicelmpl();
-        studentService.listStudentsByYear(scanner.nextInt()).forEach(System.out::println);
-    }
+//    public static void main(String[] args) {
+//        Scanner scanner=new Scanner(System.in);
+//        StudentService studentService=new StudentServicelmpl();
+//        studentService.listStudentsByYear(scanner.nextInt()).forEach(System.out::println);
+//    }
+public static void main(String[] args) {
+    Scanner scanner=new Scanner(System.in);
+    int year=scanner.nextInt();
+    Student.Sex sex=scanner.next().equals("女")? Student.Sex.FEMALE: Student.Sex.MALE;
+    StudentService studentService=new StudentServicelmpl();
+    studentService.listStudentsNames(year,sex).forEach(System.out::println);
+}
 
 
 }
