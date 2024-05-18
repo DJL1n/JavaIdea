@@ -20,15 +20,26 @@ public class Test {
 //        StudentService studentService=new StudentServicelmpl();
 //        studentService.listStudentsByYear(scanner.nextInt()).forEach(System.out::println);
 //    }
+    //public static void main(String[] args) {
+    //    Scanner scanner=new Scanner(System.in);
+    //    int year=scanner.nextInt();
+    //    Student.Sex sex=scanner.next().equals("女")? Student.Sex.FEMALE: Student.Sex.MALE;
+    //    StudentService studentService=new StudentServicelmpl();
+    //    studentService.listStudentsNames(year,sex).forEach(System.out::println);
+    //}
+//public static void main(String[] args) {
+//    StudentService studentService=new StudentServicelmpl();
+//    Map<Student.Sex,List<Student>> map=studentService.mapStudentsBySex();
+//    System.out.println("女");
+//    map.get(Student.Sex.FEMALE).forEach(System.out::println);
+//    System.out.println("男");
+//    map.get(Student.Sex.MALE).forEach(System.out::println);
+//}
 public static void main(String[] args) {
-    Scanner scanner=new Scanner(System.in);
-    int year=scanner.nextInt();
-    Student.Sex sex=scanner.next().equals("女")? Student.Sex.FEMALE: Student.Sex.MALE;
     StudentService studentService=new StudentServicelmpl();
-    studentService.listStudentsNames(year,sex).forEach(System.out::println);
+    Scanner scanner=new Scanner(System.in);
+    studentService.removeStudent(scanner.nextInt());
 }
-
-
 }
 
 
@@ -165,6 +176,7 @@ class StudentServicelmpl implements StudentService{
     @Override
     public boolean removeStudent(int id) {
         boolean res=studentList.removeIf(student -> student.getId()==id);
+        studentList.stream().forEach(System.out::println);
         return res;
     }
 }
