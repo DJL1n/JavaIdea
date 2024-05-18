@@ -3,7 +3,7 @@ import java.nio.file.*;
 
 public class UniqueWords {
     public static void main(String[] args) throws Exception{
-        List<String> lines = Files.readAllLines(Paths.get("ListFeatures.java"));
+        List<String> lines = Files.readAllLines(Paths.get("example1.txt"));
         Set<String> words=new TreeSet<>();
         for (String line : lines) {
             for (String word : line.split("\\W+")) {
