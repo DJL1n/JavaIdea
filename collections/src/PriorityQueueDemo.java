@@ -19,7 +19,7 @@ public class PriorityQueueDemo {
         QueueDemo.printQ(priorityQueue);
 
         String fact="EDUCATION SHOULD ESCHEW OBFUSCATION";
-        List<String> strings=Arrays.asList(fact.split(" "));
+        List<String> strings=Arrays.asList(fact.split(""));
         PriorityQueue<String> stringPQ=new PriorityQueue<>(strings);
         QueueDemo.printQ(stringPQ);
         stringPQ = new PriorityQueue<>(
