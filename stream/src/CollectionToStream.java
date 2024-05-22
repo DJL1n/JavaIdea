@@ -20,6 +20,7 @@ public class CollectionToStream {
         m.put("pi", 3.14159);
         m.put("e",2.718);
         m.put("phi", 1.618);
-        m.entrySet().stream().map(e->e.getKey()+": "+e.getValue()).forEach(System.out::println);
+//        m.entrySet().stream().map(e->e.getKey()+": "+e.getValue()).forEach(System.out::println);
+        m.entrySet().forEach(System.out::println);
     }
 }
