@@ -7,7 +7,7 @@ public class FileToWordsBuilder {
     public FileToWordsBuilder(String filePath) throws Exception{
         Files.lines(Paths.get(filePath)).skip(1)
                 .forEach(line->{
-                    for (String w : line.split("[ .?,]+")) {
+                    for (String w : line.split("\t+")) {
                         builder.add(w);
                     }
                 });
