@@ -192,9 +192,9 @@ public static void main(String[] args) {
     System.out.println(
             DatabaseUtils.getStudents().stream()
             .filter(i->i.getNumber()==stuNum)
-            .filter(i->i.getTeacher().getNumber()==teaNum)
-            .findFirst()
+                    .findFirst()
             .map(Student::getTeacher)
+                    .filter(i->i.getNumber()==teaNum)
             .map(Teacher::getCollege)
             .map(College::getName)
             .orElse("未知学院")
