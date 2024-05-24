@@ -8,11 +8,12 @@ public class Example10_1 {
         System.out.println(f.length());
         System.out.println(f.getAbsoluteFile());
         File file =new File("new.txt");
-        if (!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
                 System.out.println(file.getName());
-            }catch (IOException e){
+            } catch (IOException e) {
+            }
         }
     }
 }
