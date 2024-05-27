@@ -1,5 +1,7 @@
 package src.IO;
 
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import   java.io.FileOutputStream;
 import   java.io.IOException;
 import   java.nio.file.Files;
@@ -24,14 +26,10 @@ public class IOTest {
                         "更上一层楼\r\n";
 
         // writeToFile(fileName, str);
-
         writeToFile2(fileName, str);
-
-
 
         System.out.println("--------- 基于基本IO流实现文件的复制   ----------");
         String toFile =   "C:/example/to.txt";
-
         // copyByIO(fileName, toFile);
 
 
@@ -120,8 +118,13 @@ public class IOTest {
 
      */
 
-    private static void writeToFile2(String fileName,   String content) {
-
+    private static void writeToFile2(String fileName,   String content) throws IOException {
+        FileOutputStream out=new FileOutputStream(fileName);
+        BufferedOutputStream bos=new BufferedOutputStream(out);
+        try(bos){
+            byte[] buf=content.getBytes();
+            bos.write(buf);
+        }catch (Exception e){}
     }
 
 
