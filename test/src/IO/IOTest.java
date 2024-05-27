@@ -10,12 +10,9 @@ import java.nio.file.Path;
 public class IOTest {
     public static void main(String[] args) throws IOException {
         String fileName =   "C:/example/from.txt";
-        Path from=Path.of(fileName);
 
         System.out.println("----- 创建文件 ------");
         //createFile(fileName);
-        Files.createFile(from);
-
 
         System.out.println("-----  将字符串写入文件   -------");
         // \r\n在txt文本中换行
@@ -59,63 +56,47 @@ public class IOTest {
 
 
     /**
-
      * 基于Path/Files实现
-
      * 将传入的文件绝对路径字符串转path
-
      * 判断path不存在，则先创建目录，创建文件
-
      * 文件存在，忽略操作
-
      *
-
      * @param fileName
-
      */
 
     private static void createFile(String fileName) {
+        Path from =Path.of(fileName);
+        if (!Files.exists(from)){
 
-
-
+        }
     }
 
 
 
     /**
-
      * 注意，传入的fileName为文件绝对路径，必须确保文件所在目录已经存在，才能通过FileOutputStream创建
-
      * 将字符串转字节数组，基于FileOutputStream直接写入
-
      *
-
      * @param fileName
-
      * @param content
-
      */
 
-    private static void writeToFile(String fileName, String   content) {
-
+    private static void writeToFile(String fileName, String   content) throws FileNotFoundException {
+        FileOutputStream out=new FileOutputStream(fileName);
+        BufferedOutputStream bos=new BufferedOutputStream(out);
+        try(bos){
+            byte[] buf=content.getBytes();
+            bos.write(buf);
+        }catch (Exception e){}
     }
 
-
-
     /**
-
      * 将传入的文件绝对路径字符串转path，通过Files创建文件所在目录
-
      * 将字符串，基于Files工具类直接写入。写入方法，文件不存在创建并写入，存在则覆盖写入
-
      * 字符串转字节数组再写入也可，但无意义
-
      *
-
      * @param fileName
-
      * @param content
-
      */
 
     private static void writeToFile2(String fileName,   String content) throws IOException {
@@ -130,19 +111,12 @@ public class IOTest {
 
 
     /**
-
      * 基于基本IO，以及字节数组缓冲区，复制文件
-
      * 打印显示循环读写循环次数
-
      * 正确关闭资源
-
      *
-
      * @param sourceFile
-
      * @param targetFile
-
      */
 
     private static void copyByIO(String sourceFile, String   targetFile) {
