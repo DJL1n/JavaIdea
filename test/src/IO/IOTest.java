@@ -1,9 +1,6 @@
 package src.IO;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import   java.io.FileOutputStream;
-import   java.io.IOException;
+import java.io.*;
 import   java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -29,30 +26,18 @@ public class IOTest {
         String toFile =   "C:/example/to.txt";
         // copyByIO(fileName, toFile);
 
-
-
         System.out.println("--------- 基于NIO实现文件的复制 ----------");
-
         String toFile2 =   "C:/example/nio/to.txt";
-
         // copyByIO(fileName, toFile2);
 
-
-
         System.out.println("---------- 删除指定文件 -------------");
-
         // deleteFile(toFile);
 
-
-
         System.out.println("---------- 遍历指定目录文件 -------------");
-
         String dir = "C:/example";
-
         // walkDirectories(dir);
 
     }
-
 
 
     /**
@@ -64,14 +49,13 @@ public class IOTest {
      * @param fileName
      */
 
-    private static void createFile(String fileName) {
+    private static void createFile(String fileName) throws IOException {
         Path from =Path.of(fileName);
-        if (!Files.exists(from)){
-
+        if (!Files.exists(from.getParent())){
+            Files.createDirectories(from.getParent());
         }
+        Files.createFile(from);
     }
-
-
 
     /**
      * 注意，传入的fileName为文件绝对路径，必须确保文件所在目录已经存在，才能通过FileOutputStream创建
@@ -81,7 +65,11 @@ public class IOTest {
      * @param content
      */
 
-    private static void writeToFile(String fileName, String   content) throws FileNotFoundException {
+    private static void writeToFile(String fileName, String   content) throws IOException {
+        Path from =Path.of(fileName);
+        if (!Files.exists(from.getParent())){
+            Files.createDirectories(from.getParent());
+        }
         FileOutputStream out=new FileOutputStream(fileName);
         BufferedOutputStream bos=new BufferedOutputStream(out);
         try(bos){
@@ -100,12 +88,12 @@ public class IOTest {
      */
 
     private static void writeToFile2(String fileName,   String content) throws IOException {
-        FileOutputStream out=new FileOutputStream(fileName);
-        BufferedOutputStream bos=new BufferedOutputStream(out);
-        try(bos){
-            byte[] buf=content.getBytes();
-            bos.write(buf);
-        }catch (Exception e){}
+        Path file=Path.of(fileName);
+        if (!Files.exists(file.getParent())){
+            Files.createDirectories(file.getParent());
+        }
+        byte[] buf=content.getBytes();
+        Files.write(file,buf);
     }
 
 
@@ -119,11 +107,11 @@ public class IOTest {
      * @param targetFile
      */
 
-    private static void copyByIO(String sourceFile, String   targetFile) {
-
-
-
-
+    private static void copyByIO(String sourceFile, String   targetFile) throws FileNotFoundException {
+        FileInputStream in=new FileInputStream(sourceFile);
+        BufferedInputStream bis=new BufferedInputStream(in);
+        FileOutputStream out=new FileOutputStream(targetFile);
+        BufferedOutputStream bos=new BufferedOutputStream(out);
 
 
 
