@@ -95,8 +95,8 @@ public class IOTest {
         if (!Files.exists(file.getParent())){
             Files.createDirectories(file.getParent());
         }
-        byte[] buf=content.getBytes();
-        Files.write(file,buf);
+
+        Files.writeString(file,content);
     }
 
 
@@ -166,7 +166,9 @@ public class IOTest {
      */
 
     private static void walkDirectories(String dir) throws IOException {
-        Files.walk(Path.of(dir))
+        Path path=Path.of(dir);
+        if (Files.notExists(path)) return;
+        Files.walk(path)
                 .sorted(Comparator.reverseOrder())
                 .forEach(System.out::println);
 
