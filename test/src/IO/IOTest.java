@@ -3,6 +3,7 @@ package src.IO;
 import java.io.*;
 import   java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class IOTest {
@@ -164,9 +165,10 @@ public class IOTest {
      * @param dir
      */
 
-    private static void walkDirectories(String dir) {
-
-
+    private static void walkDirectories(String dir) throws IOException {
+        Files.walk(Path.of(dir))
+                .sorted(Comparator.reverseOrder())
+                .forEach(System.out::println);
 
     }
 
