@@ -126,58 +126,42 @@ public class IOTest {
 
     }
 
-
-
     /**
-
      * 基于NIO，实现文件的复制
-
      * 注意，判断目标为字符串，需要转为path并创建相应目录
-
      *
-
      * @param sourceFile
-
      * @param targetFile
-
      */
 
-    private static void copyByNIO(String sourceFile, String   targetFile) {
-
-
+    private static void copyByNIO(String sourceFile, String   targetFile) throws IOException {
+        Path out=Path.of(targetFile);
+        if (!Files.exists(out.getParent())){
+            Files.createDirectories(out.getParent());
+        }
+        Path in=Path.of(sourceFile);
+        Files.copy(in,out);
 
     }
 
 
 
     /**
-
      * 删除文件
-
      *
-
      * @param fileName
-
      */
 
-    private static void deleteFile(String fileName) {
-
-
-
+    private static void deleteFile(String fileName) throws IOException {
+        Path file=Path.of(fileName);
+        Files.deleteIfExists(file);
     }
 
-
-
     /**
-
      * 遍历打印指定目录下全部目录/文件名称
-
      * 尝试改变正逆序操作方法
-
      *
-
      * @param dir
-
      */
 
     private static void walkDirectories(String dir) {
