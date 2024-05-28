@@ -113,13 +113,14 @@ public class IOTest {
         FileInputStream in=new FileInputStream(sourceFile);
         FileOutputStream out=new FileOutputStream(targetFile);
         try (in;out) {
-            long tansfer;
-            int read;
+            int tansfer=0;
+            int read=0;
             byte[] buffer=new byte[DEFAULT_BUFF_SIZE];
             while((read=in.read(buffer,0,DEFAULT_BUFF_SIZE))>0){
-                out.write(buffer);
-
+                out.write(buffer,0,read);
+                tansfer++;
             }
+            System.out.println(tansfer);
         } catch (IOException e) { }
 
 
