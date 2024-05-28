@@ -3,8 +3,10 @@ package src.IO;
 import java.io.*;
 import   java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class IOTest {
+    public static final int DEFAULT_BUFF_SIZE = 1024;
     public static void main(String[] args) throws IOException {
         String fileName =   "C:/example/from.txt";
 
@@ -107,12 +109,18 @@ public class IOTest {
      * @param targetFile
      */
 
-    private static void copyByIO(String sourceFile, String   targetFile) throws FileNotFoundException {
+    private static void copyByIO(String sourceFile, String   targetFile) throws IOException {
         FileInputStream in=new FileInputStream(sourceFile);
-        BufferedInputStream bis=new BufferedInputStream(in);
         FileOutputStream out=new FileOutputStream(targetFile);
-        BufferedOutputStream bos=new BufferedOutputStream(out);
+        try (in;out) {
+            long tansfer;
+            int read;
+            byte[] buffer=new byte[DEFAULT_BUFF_SIZE];
+            while((read=in.read(buffer,0,DEFAULT_BUFF_SIZE))>0){
+                out.write(buffer);
 
+            }
+        } catch (IOException e) { }
 
 
     }
