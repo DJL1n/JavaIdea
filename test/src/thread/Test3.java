@@ -1,7 +1,11 @@
 package src.thread;
 
+
+import java.util.Random;
+
 class SellTickets implements Runnable{
     private volatile int tickets;
+    private final Random random=new Random();
 
     public SellTickets(int tickets) {
         this.tickets = tickets;
@@ -15,7 +19,7 @@ class SellTickets implements Runnable{
                 }
                 tickets-=1;
                 System.out.println(Thread.currentThread().getName()+"目前还剩"+tickets+"张票");
-                Thread.sleep(10);
+                Thread.sleep(random.nextInt(100));
             }
         }
     }
