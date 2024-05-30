@@ -37,9 +37,9 @@ class SellTickets implements Runnable{
 public class Test3 {
     public static void main(String[] args) {
         SellTickets sellTickets=new SellTickets(300);
-        Thread ha=new Thread(sellTickets,"ha");
-        Thread haxi=new Thread(sellTickets,"haxi");
-        Thread hadong=new Thread(sellTickets,"hadong");
+        Thread ha=new Thread(sellTickets,"哈站");
+        Thread haxi=new Thread(sellTickets,"哈西站");
+        Thread hadong=new Thread(sellTickets,"哈东站");
         ha.start();
         hadong.start();
         haxi.start();
