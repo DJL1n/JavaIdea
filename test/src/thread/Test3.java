@@ -19,8 +19,8 @@ class SellTickets implements Runnable{
                 }
                 tickets-=1;
                 System.out.println(Thread.currentThread().getName()+"目前还剩"+tickets+"张票");
-                Thread.sleep(random.nextInt(100));
             }
+            Thread.sleep(random.nextInt(50));
         }
     }
 
