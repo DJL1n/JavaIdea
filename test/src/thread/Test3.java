@@ -10,6 +10,9 @@ class SellTickets implements Runnable{
     public void f1() throws InterruptedException {
         while (tickets>0){
             synchronized (this){
+                if (tickets<1){
+                    break;
+                }
                 tickets-=1;
                 System.out.println(Thread.currentThread().getName()+"目前还剩"+tickets+"张票");
                 Thread.sleep(10);
