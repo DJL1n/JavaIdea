@@ -325,5 +325,40 @@ public class ATM
 
         }
     }
+    //密码修改
+    private void updatepassword()
+    {
+        System.out.println("-----修改密码操作-------");
+        while(true)
+        {
+            System.out.println("请输入您的当前账户密码");
+            String password=sc.next();
+            if(loginacc.getPassword().equals(password))
+            {
+                while (true)
+                {
+                    System.out.println("请输入新的密码");
+                    String newpassword1=sc.next();
+                    //第二次确认密码
+                    System.out.println("请确认您的密码");
+                    String newpassword2=sc.next();
+                    if(newpassword1.equals(newpassword2))
+                    {
+                        //将进行密码修改
+                        loginacc.setPassword(newpassword2);
+                        System.out.println("密码修改成功");//返回欢迎界面
+                        return;
+                    }
+                    else{
+                        System.out.println("您输入的密码不一致，请重新输入");
+                    }
+                }
+            }
+            else {
+                System.out.println("您输入的密码不正确");
+            }
+        }
+
+    }
 
 }
