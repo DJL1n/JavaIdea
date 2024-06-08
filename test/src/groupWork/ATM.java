@@ -360,5 +360,31 @@ public class ATM
         }
 
     }
+    //销户功能
+    private boolean deleteaccount()
+    {
+        System.out.println("----销户操作-----");
+        System.out.println("请问您确定销户吗？y/n");
+        String command=sc.next();
+        switch (command)
+        {
+            case "y":
+                //判断账户是否有钱
+                if(loginacc.getMoney()==0)
+                {
+                    accounts.remove(loginacc);
+                    System.out.println("销户成功");
+                    return true;
+                }
+                else {
+                    System.out.println("您的账户还有余额，销户失败");
+                    return  false;
+                }
+
+            default:
+                System.out.println("取消销户操作");
+                return false;
+        }
+    }
 
 }
