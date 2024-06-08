@@ -126,4 +126,98 @@ public class ATM
         return null;
     }
 
+    public  void login()
+    {
+        System.out.println("-----登录页面------");
+        if(accounts.size()==0)
+        {
+            System.out.println("账户上没有用户，请先开户");
+            return;
+        }
+        while (true)
+        {
+            System.out.println("请输入您的登录卡号");
+            String carid=sc.next();
+            Account acc=getid(carid);
+            if(acc==null)
+            {
+                System.out.println("您输入的卡号不存在，请重新输入");
+            }
+            else {
+                while(true)
+                {
+                    System.out.println("请输入您的密码");
+                    String password=sc.next();
+                    //判断是否正常
+                    if(acc.getPassword().equals(password))
+                    {
+                        loginacc=acc;
+                        System.out.println("恭喜您"+acc.getUsername()+"登录成功，您的卡号："+acc.getCarid());
+                        //登录后的页面展示
+                        showusercommand();
+                        return;
+                    }
+                    else{
+                        System.out.println("您输入的密码有误");
+                    }
+                }
+            }
+        }
+
+    }
+    //登录后的页面展示
+    private void showusercommand()
+    {
+        while(true)
+        {
+            System.out.println(loginacc.getUsername()+"您可以选择如下功能对账户进行处理：");
+            System.out.println("1:查询账户");
+            System.out.println("2:存款");
+            System.out.println("3:取款");
+            System.out.println("4:转账");
+            System.out.println("5:密码修改");
+            System.out.println("6:退出");
+            System.out.println("7:注销当前账户");
+            System.out.println("请选择您的操作");
+            int command=sc.nextInt();
+            switch (command)
+            {
+                case 1:
+                    //查询账户
+                    showloginacc();
+                    break;
+                case 2:
+                    //存款
+                    depositmoney();
+                    break;
+                case 3:
+                    //取款
+                    drawmoney();
+                    break;
+                case 4:
+                    //转账
+                    transfermoney();
+                    break;
+                case 5:
+                    //密码修改
+                    updatepassword();
+                    return;//返回欢迎界面
+                case 6:
+                    //退出
+                    System.out.println(loginacc.getUsername()+"恭喜您退出成功");
+                    return;
+                case 7:
+                    //注销当前账户
+                    if(deleteaccount())
+                    {
+                        //销户成功了,返回欢迎页面
+                        return;
+                    }
+                    break;
+                default:
+                    System.out.println("当前命令不存在");
+            }
+        }
+    }
+
 }
