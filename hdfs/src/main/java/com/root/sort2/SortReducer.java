@@ -1,6 +1,5 @@
 package com.root.sort2;
 
-package com.root.sort;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
