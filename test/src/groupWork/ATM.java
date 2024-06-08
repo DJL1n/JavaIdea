@@ -219,5 +219,111 @@ public class ATM
             }
         }
     }
+    //查询账户
+    private  void showloginacc()
+    {
+        System.out.println("-----当前您的账户信息如下------");
+        System.out.println("卡号:"+loginacc.getCarid());
+        System.out.println("户主："+loginacc.getUsername());
+        System.out.println("余额:"+loginacc.getMoney());
+        System.out.println("限制额度:"+loginacc.getLimit());
+
+    }
+    //存款功能
+    private  void depositmoney()
+    {
+        System.out.println("----存款操作---");
+        System.out.println("请输入您的存款金额");
+        double money=sc.nextDouble();
+        loginacc.setMoney(loginacc.getMoney()+money);
+        System.out.println("恭喜您成功存款"+money+"您的当前余额为"+loginacc.getMoney());
+    }
+    //取款功能
+    private void drawmoney()
+    {
+        System.out.println("------取款操作------");
+        if(loginacc.getMoney()<100)
+        {
+            System.out.println("您的账户余额不足，当前余额为"+loginacc.getMoney());
+            return;
+        }
+        System.out.println("请输入您要取款的金额");
+        double money=sc.nextDouble();
+        while (true)
+        {
+            if(loginacc.getMoney()>=money)
+            {
+                if(money> loginacc.getLimit())
+                {
+                    System.out.println("您的取款金额超出了最高限制"+loginacc.getLimit());
+                    break;
+                }
+                else {
+                    loginacc.setMoney(loginacc.getMoney()-money);
+                    System.out.println("恭喜您成功取款"+money+"您的当前账户余额为"+loginacc.getMoney());
+                    break;
+                }
+            }
+            else {
+                System.out.println("您的余额不足，您当前余额为"+loginacc.getMoney());
+                break;
+            }
+
+
+        }
+
+    }
+    //转账功能
+    private void transfermoney() {
+        System.out.println("-----转账操作-------");
+        //判断账号个数
+        if (accounts.size() < 2) {
+            System.out.println("当前账户上只有您一个账号，无法转账请开户");
+            return;
+        }
+        //判断有没有钱
+        if (loginacc.getMoney() == 0) {
+            System.out.println("余额不足无法转账");
+            return;
+        }
+        //转账开始
+        while (true) {
+            System.out.println("请输入要转入的卡号");
+            String carid = sc.next();
+            //判断卡号是否正正确
+            Account acc = getid(carid);
+            if (acc == null) {
+                System.out.println("您输入的卡号不存在，请重新输入");
+            } else {
+                //卡号正确开始转账
+                String name = "*" + acc.getUsername().substring(1);//*三
+                System.out.println("请您输入" + name + "的姓");
+                String putname = sc.next();
+                //判断是否正确
+
+
+                if (acc.getUsername().startsWith(putname)) {
+                    //认证通过
+                    while (true) {
+                        System.out.println("请输入您要转账的金额");
+                        double money = sc.nextDouble();
+                        if (loginacc.getMoney() >= money) {
+                            //转账给对方
+                            loginacc.setMoney(loginacc.getMoney() - money);//自己扣钱
+                            acc.setMoney(acc.getMoney() + money);//对方加钱
+                            System.out.println("转账成功："+money);
+                            return;
+                        } else {
+                            System.out.println("您的账户余额不足，您的当前余额为" + loginacc.getMoney());
+                        }
+                    }
+                }
+                else {
+                    System.out.println("认证失败，请重新输入");
+                }
+            }
+
+        }
+    }
 
 }
