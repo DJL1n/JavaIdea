@@ -48,16 +48,6 @@ public class SortDriver {
             System.out.println("Split details: " + split.toString());
         }
 
-        // 将分片信息写入文件
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("splits_info.txt"))) {
-            writer.write("Total splits to process: " + splits.size() + "\n");
-            for (InputSplit split : splits) {
-                writer.write("Split details: " + split.toString() + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
