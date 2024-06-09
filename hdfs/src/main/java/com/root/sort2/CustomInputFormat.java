@@ -35,6 +35,7 @@ public class CustomInputFormat extends TextInputFormat {
         @Override
         public void initialize(InputSplit split, TaskAttemptContext context) throws IOException, InterruptedException {
             lineRecordReader.initialize(split, context);
+            System.out.println("Initializing split: " + split.toString());
         }
 
         @Override
@@ -69,3 +70,4 @@ public class CustomInputFormat extends TextInputFormat {
         }
     }
 }
+
