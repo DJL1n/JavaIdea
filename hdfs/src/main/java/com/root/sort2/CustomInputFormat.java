@@ -12,7 +12,6 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
 import java.io.IOException;
-import java.util.List;
 
 public class CustomInputFormat extends TextInputFormat {
 
@@ -22,7 +21,7 @@ public class CustomInputFormat extends TextInputFormat {
     }
 
     @Override
-    public RecordReader<LongWritable, Text> createRecordReader(InputSplit split, TaskAttemptContext context) throws IOException {
+    public RecordReader<LongWritable, Text> createRecordReader(InputSplit split, TaskAttemptContext context) {
         return new CustomRecordReader();
     }
 
@@ -50,17 +49,17 @@ public class CustomInputFormat extends TextInputFormat {
         }
 
         @Override
-        public LongWritable getCurrentKey() throws IOException, InterruptedException {
+        public LongWritable getCurrentKey() {
             return currentKey;
         }
 
         @Override
-        public Text getCurrentValue() throws IOException, InterruptedException {
+        public Text getCurrentValue() {
             return currentValue;
         }
 
         @Override
-        public float getProgress() throws IOException, InterruptedException {
+        public float getProgress() throws IOException {
             return lineRecordReader.getProgress();
         }
 
