@@ -37,7 +37,7 @@ public class SortDriver {
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         // 获取并打印分片信息
-        CustomInputFormat inputFormat = new CustomInputFormat();
+        FileInputFormat inputFormat = new CustomInputFormat();
         List<InputSplit> splits = inputFormat.getSplits(job);
         System.out.println("Total splits to process : " + splits.size());
         for (InputSplit split : splits) {
