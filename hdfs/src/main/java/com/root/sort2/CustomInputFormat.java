@@ -8,10 +8,12 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
-import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,18 +34,26 @@ public class CustomInputFormat extends FileInputFormat<LongWritable, Text> {
         FileSystem fs = FileSystem.get(job.getConfiguration());
 
         for (Path path : paths) {
-            long length = fs.getFileStatus(path).getLen();
-            long splitSize = LINES_PER_SPLIT;
-            long numSplits = length / splitSize;
-            for (long i = 0; i < numSplits; i++) {
-                splits.add(new FileSplit(path, i * splitSize, splitSize, null));
-            }
-            // Handle the last split if the file length is not an exact multiple of splitSize
-            if (length % splitSize != 0) {
-                splits.add(new FileSplit(path, numSplits * splitSize, length - (numSplits * splitSize), null));
+            int lineCount = getLineCount(fs, path);
+            int numSplits = (int) Math.ceil((double) lineCount / LINES_PER_SPLIT);
+
+            for (int i = 0; i < numSplits; i++) {
+                long start = i * LINES_PER_SPLIT;
+                long length = (i == numSplits - 1) ? (lineCount - start) : LINES_PER_SPLIT;
+                splits.add(new FileSplit(path, start, length, null));
             }
         }
         return splits;
+    }
+
+    private int getLineCount(FileSystem fs, Path path) throws IOException {
+        int lineCount = 0;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(path)))) {
+            while (reader.readLine() != null) {
+                lineCount++;
+            }
+        }
+        return lineCount;
     }
 
     public static class CustomRecordReader extends RecordReader<LongWritable, Text> {
@@ -90,3 +100,4 @@ public class CustomInputFormat extends FileInputFormat<LongWritable, Text> {
         }
     }
 }
+
