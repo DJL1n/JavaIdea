@@ -16,7 +16,7 @@ public class DBUtil {
         try{
             //dbConnection = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;DatabaseName=studentManagementSystem","sa","123456");
             dbConnection = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;DatabaseName=studentManagementSystem","sa","123456");
-            //System.out.println("数据库连接成功");
+            System.out.println("数据库连接成功");
         } catch (SQLException e) {
             e.printStackTrace();
         }
