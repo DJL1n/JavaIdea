@@ -240,7 +240,12 @@ public class StudentDao extends BaseDao{
         return resultSex;
     }
 
-
+    /**
+     * 获取指定学生的成绩。
+     * @param studentName 学生的姓名。
+     * @param courseName 课程的名字
+     * @return 学生的成绩
+     */
     public int FindGrade(String studentName,String courseName) throws SQLException {
 
         int result = 0;
