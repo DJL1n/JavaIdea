@@ -1,8 +1,6 @@
 package dao;
 
-import model.Student;
 import model.Teacher;
-import view.IndexFrame;
 import view.TeacherFrame;
 
 import java.sql.PreparedStatement;
@@ -10,9 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static view.TeacherFrame.teacher;
-//关于教师的有关方法
+
+/**
+ * TeacherDao 类提供了教师相关的数据访问方法。
+ * 继承自 BaseDao 类，用于执行与教师相关的数据库操作。
+ */
 public class TeacherDao extends BaseDao{
-    //登陆界面选择身份
+    /**
+     * 根据用户名和密码查询教师账号。
+     * @param name 教师的用户名。
+     * @param password 教师的密码。
+     * @return 如果查询成功，返回一个 Teacher 对象；如果失败，返回 null。
+     */
     public Teacher selectTeacher(String name, String password){
         String sqlStr = "select * from teacherLogin where name = ? and password = ?";
         Teacher teacher = null;
@@ -32,7 +39,13 @@ public class TeacherDao extends BaseDao{
         }
         return teacher;
     }
-    //教师修改密码
+
+    /**
+     * 允许教师修改自己的密码。
+     * @param name 教师的用户名。
+     * @param newPassword 新密码。
+     * @return 操作结果的描述信息。
+     */
     public  String revisePassword(String name, String newPassword){
         String resultStr = "操作失败";
         String sqlStr = "update teacherLogin set password = ? where name = ? and password = ?";
@@ -52,6 +65,8 @@ public class TeacherDao extends BaseDao{
         }
         return resultStr;
     }
+
+    // 以下是教师获取所教授课程名称的方法
     public String getTeachCourse(String name) throws SQLException {
         String resultTeachCourse = null;
         String sqlStr = "select teachCourseName from teacher where name = ?";
@@ -64,6 +79,7 @@ public class TeacherDao extends BaseDao{
         return resultTeachCourse;
     }
 
+    // 同上，获取所教授课程ID的方法
     public String getTeachCourseID(String name) throws SQLException {
         String resultTeachCourseID = null;
         String sqlStr = "select teachCourseId from teacher where name = ?";
@@ -76,6 +92,13 @@ public class TeacherDao extends BaseDao{
         return resultTeachCourseID;
     }
 
+    /**
+     * 教师设置或更新学生在某门课程中的成绩。
+     * @param stuName 学生姓名。
+     * @param courseName 课程名称。
+     * @param grade 学生成绩。
+     * @return 操作结果的描述信息。
+     */
     public String SetStudentGrade(String stuName,String courseName,int grade) throws SQLException {
         String resultStr = "录入失败";
         String sqlStr = "update chooseCourse set grade=? where studentName = ? and courseName = ?";
@@ -89,6 +112,12 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    /**
+     * 教师查询学生在某门课程中的成绩。
+     * @param stuName 学生姓名。
+     * @param courseName 课程名称。
+     * @return 学生的成绩，如果未找到则返回null。
+     */
     public String FindStuGrade(String stuName,String courseName) throws SQLException {
         String resultStr = null;
         String sqlStr = "select grade from chooseCourse where studentName = ? and courseName = ? ";
@@ -104,6 +133,13 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    /**
+     * 教师更改学生在某门课程中的成绩。
+     * @param stuName 学生姓名。
+     * @param courseName 课程名称。
+     * @param changeGrade 新的成绩。
+     * @return 操作结果的描述信息。
+     */
     public String ChangeStuGrade(String stuName,String courseName,int changeGrade) throws SQLException {
         String resultStr = null;
         String sqlStr = "update chooseCourse set grade = ? where studentName = ? and courseName = ?";
@@ -117,14 +153,18 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    // 以下是教师添加和删除信息的方法
     public String AddTeacher(int TeacherID,String TeacherName,String TeacherPassword,String TeachCourseName) throws SQLException {
+        // 实现添加教师信息的逻辑
         String resultStr = "操作失败";
+        // SQL 插入语句
         String sqlSte1 = "insert into teacherLogin values (?,?,?)";
         PreparedStatement preparedStatement = this.con.prepareStatement(sqlSte1);
         preparedStatement.setInt(1,TeacherID);
         preparedStatement.setString(2,TeacherName);
         preparedStatement.setString(3,TeacherPassword);
         if(preparedStatement.executeUpdate()>=1){
+            // 教师登录信息插入成功后，继续插入教师授课信息
             String sqlStr2 = "insert into teacher values(?,?,?)";
             int TeachCourseID = 0;
             String sqlStr3 = "select id from course where name = ?";
@@ -145,8 +185,10 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    // 实现删除教师信息的逻辑
     public String DeleteTeacher(String TeacherName,String TeacherID) throws SQLException {
         String resultStr = "删除失败！";
+        // SQL 删除语句
         String sqlStr1 = "delete from teacher where name = ? ";
         PreparedStatement preparedStatement1 = this.con.prepareStatement(sqlStr1);
         preparedStatement1.setString(1,TeacherName);
@@ -162,6 +204,14 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    /**
+     * 修改教师信息，包括授课课程名称、课程ID和密码。
+     * @param TeacherName 教师姓名。
+     * @param TeachCourseName 教师所教授的课程名称。
+     * @param TeachCourseID 教师所教授的课程ID。
+     * @param TeacherPassword 教师密码。
+     * @return 操作结果的描述信息。
+     */
     public String reviseTeacherInfo(String TeacherName,String TeachCourseName,int TeachCourseID,String TeacherPassword) throws SQLException {
         String resultStr = "修改失败！";
         String sqlStr1 = "update teacher set teachCourseName = ? ,teachCourseId = ? where name = ?";
