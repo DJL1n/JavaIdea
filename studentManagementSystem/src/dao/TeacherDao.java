@@ -214,12 +214,14 @@ public class TeacherDao extends BaseDao{
      */
     public String reviseTeacherInfo(String TeacherName,String TeachCourseName,int TeachCourseID,String TeacherPassword) throws SQLException {
         String resultStr = "修改失败！";
+        // SQL 更新语句
         String sqlStr1 = "update teacher set teachCourseName = ? ,teachCourseId = ? where name = ?";
         PreparedStatement preparedStatement1 = this.con.prepareStatement(sqlStr1);
         preparedStatement1.setString(1,TeachCourseName);
         preparedStatement1.setInt(2,TeachCourseID);
         preparedStatement1.setString(3,TeacherName);
         if(preparedStatement1.executeUpdate()>=1){
+            // 更新教师信息成功后，继续更新密码信息
             String sqlStr2 = "update teacherLogin set password = ? where name = ?";
             PreparedStatement preparedStatement2 = this.con.prepareStatement(sqlStr2);
             preparedStatement2.setString(1,TeacherPassword);
@@ -231,6 +233,7 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    //获取教师ID
     public String getId(String name) throws SQLException {
         String resultStr = null;
         String sqlStr = "select id from teacherLogin where name = ? ";
@@ -244,6 +247,7 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
+    //获取教师所教授课程名称
     public String getCourseName(String name) throws SQLException {
         String resultName = null;
         String sqlStr = "select teachCourseName from teacher where name = ?";
@@ -256,6 +260,7 @@ public class TeacherDao extends BaseDao{
         return resultName;
     }
 
+    //获取教师所教授课程ID
     public String getCourseID(String name) throws SQLException {
         String resultID = null;
         String sqlStr = "select teachCourseId from teacher where name = ?";
