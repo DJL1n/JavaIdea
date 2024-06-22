@@ -153,7 +153,7 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
-    // 以下是教师添加和删除信息的方法
+    // 添加教师
     public String AddTeacher(int TeacherID,String TeacherName,String TeacherPassword,String TeachCourseName) throws SQLException {
         // 实现添加教师信息的逻辑
         String resultStr = "操作失败";
@@ -185,7 +185,7 @@ public class TeacherDao extends BaseDao{
         return resultStr;
     }
 
-    // 实现删除教师信息的逻辑
+    // 删除教师信息
     public String DeleteTeacher(String TeacherName,String TeacherID) throws SQLException {
         String resultStr = "删除失败！";
         // SQL 删除语句
