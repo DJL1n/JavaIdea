@@ -2,22 +2,28 @@ package dao;
 
 
 import model.Student;
-import view.IndexFrame;
 import view.StudentFrame;
 
-import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static view.StudentFrame.student;
 
-
+/**
+ * 学生数据访问对象类，继承自BaseDao。
+ * 负责处理与学生相关的数据库操作，包括登录、密码修改、信息查询、
+ * 选课以及查询成绩等。
+ */
 public class StudentDao extends BaseDao{
-    //LoginFrame登陆界面的筛选身份
+    /**
+     * 根据用户名和密码查询学生信息。
+     * @param name 学生的用户名。
+     * @param password 学生的密码。
+     * @return 如果查询成功，返回Student对象；如果失败，返回null。
+     */
     public Student selectStudent(String name, String password){
         String sqlStr = "select * from studentLogin where name = ? and password = ?";
-//        String sqlStr = "select * from student where name = ? and password = ?";
         Student student = null;
         try{
             this.pStatement = this.con.prepareStatement(sqlStr);
@@ -35,17 +41,21 @@ public class StudentDao extends BaseDao{
         }
         return student;
     }
-    //学生登陆界面中的修改密码方法
+
+    /**
+     * 允许学生修改自己的密码。
+     * @param name 学生的用户名。
+     * @param newPassword 新密码。
+     * @return 操作结果的描述信息。
+     */
     public String revisePassword(String name,String newPassword){
         String resultStr = "操作失败";
         String sqlStr = "update studentLogin set password = ? where name = ? and password = ?";
-        //String sqlStr = "update student set password = ? where name = ? and password = ?";
         try{
             this.pStatement = this.con.prepareStatement(sqlStr);
             this.pStatement.setString(1,newPassword);
             this.pStatement.setString(2,student.getName());
             this.pStatement.setString(3, student.getPassword());
-            //System.out.println(student.getPassword());
             if(pStatement.executeUpdate()>0){
                 resultStr = "操作成功！";
                 StudentFrame.student.setPassword(newPassword);
@@ -57,18 +67,24 @@ public class StudentDao extends BaseDao{
         }
         return resultStr;
     }
-    //这是管理员登陆界面中对学生信息操作的增加学生账号密码的方法
+
+    /**
+     * 为管理员提供添加学生账号的方法。
+     * @param id 学生ID。
+     * @param name 学生姓名。
+     * @param password 学生密码。
+     * @return 操作结果的描述信息。
+     */
     public String addStuLogin(String id,String name,String password) {
         String resultStr = "操作失败";
         String sqlStr = "insert into studentLogin values(?,?,?)";
-//        String sqlStr = "insert into student values(?,?,?,null,null,null)";
         try {
             this.pStatement = this.con.prepareStatement(sqlStr);
             this.pStatement.setString(1, id);
             this.pStatement.setString(2, name);
             this.pStatement.setString(3, password);
             if(pStatement.executeUpdate()>0) {
-
+                // 插入学生信息表
                 String sqlStr1 = "insert into student values(?,?,null,null,null)";
                 PreparedStatement preparedStatement = this.con.prepareStatement(sqlStr1);
                 preparedStatement.setInt(1, Integer.parseInt(id));
@@ -86,18 +102,27 @@ public class StudentDao extends BaseDao{
         return resultStr;
     }
 
+    /**
+     * 删除学生信息。
+     * @param StuName 学生姓名。
+     * @param StuID 学生ID。
+     * @return 操作结果的描述信息。
+     */
     public String deleteStuInfo(String StuName,int StuID) throws SQLException {
         String resultStr = "删除失败！";
+        // 先删除选课信息
         String sqlStr1 = "delete from chooseCourse where studentName = ? and studentId = ?";
         PreparedStatement preparedStatement = this.con.prepareStatement(sqlStr1);
         preparedStatement.setString(1,StuName);
         preparedStatement.setInt(2,StuID);
         if(preparedStatement.executeUpdate()>=0){
+            // 然后删除学生信息
             String sqlStr2 = "delete from student where name = ? and id = ?";
             PreparedStatement p = this.con.prepareStatement(sqlStr2);
             p.setString(1,StuName);
             p.setInt(2,StuID);
             if(p.executeUpdate()>=1){
+                // 最后删除登录信息
                 String sqlStr3 = "delete from studentLogin where name = ? and id = ?";
                 PreparedStatement preparedStatement1 = this.con.prepareStatement(sqlStr3);
                 preparedStatement1.setString(1,StuName);
@@ -110,12 +135,18 @@ public class StudentDao extends BaseDao{
         return resultStr;
     }
 
-//    public void findStuInfo(String name){
-//        String sqlStr = ""
-//    }
-
+    /**
+     * 修改学生信息。
+     * @param ChangeWho 需要修改信息的学生姓名。
+     * @param StuSex 学生性别。
+     * @param StuAge 学生年龄。
+     * @param StuDept 学生系别。
+     * @param StuPassword 学生密码，如果需要修改密码。
+     * @return 操作结果的描述信息。
+     */
     public String reviseStuInfo(String ChangeWho,String StuSex,int StuAge,String StuDept,String StuPassword) throws SQLException {
         String resultStr = "修改失败！";
+        // 更新学生信息表
         String sqlStr = "update student set  sex = ? , age = ? , dept = ? where name = ?";
 
         PreparedStatement preparedStatement = this.con.prepareStatement(sqlStr);
@@ -128,6 +159,7 @@ public class StudentDao extends BaseDao{
             resultStr = "修改成功！";
         }
         if(StuPassword!=null){
+            // 如果提供了新密码，更新学生登录表
             String sqlStr1 = "update studentLogin set password = ? where name = ?";
             PreparedStatement preparedStatement1 = this.con.prepareStatement(sqlStr1);
             preparedStatement1.setString(1,StuPassword);
@@ -139,14 +171,16 @@ public class StudentDao extends BaseDao{
         return resultStr;
     }
 
-    /*以下getXXX方法是在学生登陆界面中展示个人信息*/
-    //获取id
+    /**
+     * 获取指定学生的ID。
+     * @param name 学生的姓名。
+     * @return 学生的ID，如果未找到则返回null。
+     */
     public String getId(String name) throws SQLException {
         String resultStr = null;
         String sqlStr = "select id from student where name = ? ";
         PreparedStatement preparedStatement = this.con.prepareStatement(sqlStr);
         preparedStatement.setString(1,name);
-//        preparedStatement.setString(2,student.getPassword());
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             resultStr = resultSet.getString("id");
@@ -154,7 +188,12 @@ public class StudentDao extends BaseDao{
         System.out.println(resultStr);
         return resultStr;
     }
-    //获取dept
+
+    /**
+     * 获取指定学生的系部信息。
+     * @param name 学生的姓名。
+     * @return 学生的系部信息，如果未找到则返回null。
+     */
     public String getDept(String name) throws SQLException {
         String resultStr = null;
         String sqlStr = "select dept from student where name = ?";
@@ -166,7 +205,12 @@ public class StudentDao extends BaseDao{
         }
         return resultStr;
     }
-    //获取age
+
+    /**
+     * 获取指定学生的年龄。
+     * @param name 学生的姓名。
+     * @return 学生的年龄，如果未找到则返回null。
+     */
     public String getAge(String name) throws SQLException {
         String resultAge = null;
         String sqlStr = "select age from student where name = ?";
@@ -178,7 +222,12 @@ public class StudentDao extends BaseDao{
         }
         return resultAge;
     }
-    //获取sex
+
+    /**
+     * 获取指定学生的性别。
+     * @param name 学生的姓名。
+     * @return 学生的性别，如果未找到则返回null。
+     */
     public String getSex(String name) throws SQLException {
         String resultSex = null;
         String sqlStr = "select sex from student where name = ?";
@@ -190,10 +239,10 @@ public class StudentDao extends BaseDao{
         }
         return resultSex;
     }
-    /*以上getXXX方法是在学生登陆界面中展示个人信息*/
+
 
     public int FindGrade(String studentName,String courseName) throws SQLException {
-        String resultStr = null;
+
         int result = 0;
         String sqlStr = "select grade from chooseCourse where studentName = ? and courseName = ?";
         PreparedStatement preparedStatement = this.con.prepareStatement(sqlStr);
@@ -201,14 +250,20 @@ public class StudentDao extends BaseDao{
         preparedStatement.setString(2,courseName);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            resultStr = resultSet.getString("grade");
             result = resultSet.getInt("grade");
-            //System.out.println(resultStr);
+
         }
         return result;
-        //return resultStr;
     }
 
+    /**
+     * 学生选课操作。
+     * @param stuID 学生ID。
+     * @param stuName 学生姓名。
+     * @param courseID 课程ID。
+     * @param courseName 课程名称。
+     * @return 操作结果的描述信息。
+     */
     public String ChooseCourse(String stuID,String stuName,String courseID , String courseName) throws SQLException {
         String resultStr = "选课失败";
         String sqlStr = "insert into chooseCourse values(?,?,?,?,null)";
@@ -217,10 +272,7 @@ public class StudentDao extends BaseDao{
         preparedStatement.setString(2,stuName);
         preparedStatement.setString(3,courseID);
         preparedStatement.setString(4,courseName);
-//        ResultSet resultSet = preparedStatement.executeQuery();
-//        while(resultSet.next()){
-//            resultStr = "选课成功";
-//        }
+
         if(preparedStatement.executeUpdate()>=1){
             resultStr = "选课成功";
         }
